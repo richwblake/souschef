@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+require './lib/souschef'
+
+Souschef::CLI.new.call
