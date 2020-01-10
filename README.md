@@ -1,8 +1,8 @@
 # Souschef
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/souschef`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Welcome to Souschef, your kitchen assistant. It will provide recipes and helpful information for over 200 different dishes.
+You are free to search recipes by several methods, such as by name or by the category of the dish. 
+Please see below for details on installing and executing this gem on you local machine.
 
 ## Installation
 
