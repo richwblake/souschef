@@ -1,7 +1,7 @@
 # Souschef
 
 Welcome to Souschef, your kitchen assistant. It will provide recipes and helpful information for over 200 different dishes.
-You are free to search recipes by several methods, such as by name or by the category of the dish. 
+You are free to search recipes various ways, such as by name or by the category of the dish.
 Please see below for details on installing and executing this gem on you local machine.
 
 ## Installation
@@ -22,7 +22,8 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+The app will open and prompt you for a way to search for a dish. Follow the prompts to search using the way you have chosen.
+
 
 ## Development
 
@@ -32,7 +33,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/souschef.
+Bug reports and pull requests are welcome on GitHub at https://github.com/richwblake/souschef.
 
 ## License
 
