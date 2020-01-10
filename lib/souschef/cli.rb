@@ -19,5 +19,12 @@ class Souschef::CLI
     puts "Dish Name: " + dish.name
     puts "Type of Dish: " + dish.category
     puts "Regional detail: " + dish.region
+    puts ""
+    puts "Ingredients: \n"
+    dish.ingredients.each_with_index { |ingredient, index|
+      puts "  #{index + 1}. #{dish.measurements[index]} #{ingredient}"
+    }
+    puts ""
+    puts "Instructions: \n#{dish.instructions.gsub(/\./, ".\n")}\n"
   end
 end
