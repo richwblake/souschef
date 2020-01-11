@@ -1,11 +1,27 @@
 class Souschef::CLI
   def call
-    puts "Welcome to Souschef, let's get cookin'!"
+    puts "Welcome to Souschef 0.1.0, let's get cookin'!"
+    menu
     # find_dish_by_name
     # list_dishes_by_first_letter
     # find_random_dish
     # list_dish_categories
     # search_by_category
+  end
+
+  def menu
+    puts "------------------"
+    puts "       Menu       "
+    puts "------------------"
+    puts "Welcome to the menu. You can choose a search method by simply\ntyping in the name of one of the methods below."
+    puts ""
+    puts " - Search by name"
+    puts " - Search by first letter"
+    puts " - Search by category"
+    puts " - Get random dish"
+    print "\n:"
+    input = get_input_from_user
+
   end
 
   def get_input_from_user
@@ -37,7 +53,7 @@ class Souschef::CLI
     input = get_input_from_user
     dishes = Souschef::ApiHandler.fetch_dishes_by_category(input)
     dishes["meals"].each{ |dish| puts dish["strMeal"] }
-    binding.pry
+    # binding.pry
   end
 
   def find_random_dish

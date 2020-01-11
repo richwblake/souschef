@@ -4,3 +4,9 @@ class variable @@all to hold all dishes
 
 For class ApiHandler
 #search_by_first_letter returns an array of dish names to select from
+
+For class CLI
+clean up interface
+streamline workflow in #call
+implement simple recursive error checking by examining user input
+define #menu, which prints a list of options for the user to being searching
