@@ -10,3 +10,10 @@ clean up interface
 streamline workflow in #call
 implement simple recursive error checking by examining user input
 define #menu, which prints a list of options for the user to being searching
+be able to exit directly after a erroneous entry in #menu
+
+-- these options work reliably --
+search by name
+search by category
+search by first letter
+get random dish
