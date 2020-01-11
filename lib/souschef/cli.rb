@@ -14,6 +14,7 @@ class Souschef::CLI
     puts " - Search by name"
     puts " - Search by first letter"
     puts " - Search by category"
+    puts " - Search by region"
     puts " - Get random dish"
     puts " - Exit"
     puts ""
@@ -42,6 +43,8 @@ class Souschef::CLI
       list_dishes_by_first_letter
     when "search by category"
       list_dish_categories
+    when "search by region"
+      list_dishes_by_region
     when "get random dish"
       find_random_dish
     when "exit"
@@ -73,9 +76,10 @@ class Souschef::CLI
   end
 
   def list_dish_categories
-    puts "----------Categories----------"
+    puts "---------- Categories ----------"
     categories = Souschef::ApiHandler.fetch_dish_categories
     categories["categories"].each { |category| puts category["strCategory"]}
+    puts "--------------------------------"
     search_by_category
   end
 
@@ -84,6 +88,22 @@ class Souschef::CLI
     input = get_input_from_user
     dishes = Souschef::ApiHandler.fetch_dishes_by_category(input)
     dishes["meals"].each{ |dish| puts dish["strMeal"] }
+    find_dish_by_name
+  end
+
+  def list_dishes_by_region
+    puts "------------ Dishes by Region ------------"
+    regions = Souschef::ApiHandler.fetch_dish_regions
+    regions["meals"].each { |dish| puts dish["strArea"] }
+    puts "------------------------------------------"
+    search_by_region
+  end
+
+  def search_by_region
+    puts "Please enter the region by which you'd like to search:"
+    input = get_input_from_user
+    dishes = Souschef::ApiHandler.fetch_dishes_by_region(input)
+    dishes["meals"].each { |dish| puts dish["strMeal"] }
     find_dish_by_name
   end
 

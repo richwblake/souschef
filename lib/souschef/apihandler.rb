@@ -3,6 +3,42 @@ require 'pry'
 class Souschef::ApiHandler
   @@BASE_URL = "https://www.themealdb.com/api/json/v1/1/"
 
+  def self.fetch_dish_by_name(name)
+    response = self.generate_JSON_from_pathname("search.php?s=", name)
+    self.json_to_dish_args(response)
+  end
+
+  def self.fetch_dishes_by_first_letter(letter)
+    self.generate_JSON_from_pathname("search.php?f=", letter)
+  end
+
+  def self.fetch_random_dish
+    response = self.generate_JSON_from_pathname("random.php")
+    self.json_to_dish_args(response)
+  end
+
+  def self.fetch_dish_categories
+    self.generate_JSON_from_pathname("categories.php")
+  end
+
+  def self.fetch_dishes_by_category(category)
+    self.generate_JSON_from_pathname("filter.php?c=", category)
+  end
+
+  def self.fetch_dish_regions
+    self.generate_JSON_from_pathname("list.php?a=list")
+  end
+
+  def self.fetch_dishes_by_region(region)
+    self.generate_JSON_from_pathname("filter.php?a=", region)
+  end
+
+  def self.generate_JSON_from_pathname(extension, value = "")
+    path = @@BASE_URL + extension + value
+    uri = URI(path)
+    response = JSON.parse(Net::HTTP.get(uri))
+  end
+
   def self.json_to_dish_args(json)
     data_hash = {}
 
@@ -32,33 +68,5 @@ class Souschef::ApiHandler
       "measurements" => measurements_array,
       "instructions" => data_hash["strInstructions"]
     }
-  end
-
-  def self.fetch_dish_by_name(name)
-    response = self.generate_JSON_from_pathname("search.php?s=", name)
-    self.json_to_dish_args(response)
-  end
-
-  def self.fetch_dishes_by_first_letter(letter)
-    self.generate_JSON_from_pathname("search.php?f=", letter)
-  end
-
-  def self.fetch_random_dish
-    response = self.generate_JSON_from_pathname("random.php")
-    self.json_to_dish_args(response)
-  end
-
-  def self.fetch_dish_categories
-    self.generate_JSON_from_pathname("categories.php")
-  end
-
-  def self.fetch_dishes_by_category(category)
-    self.generate_JSON_from_pathname("filter.php?c=", category)
-  end
-
-  def self.generate_JSON_from_pathname(extension, value = "")
-    path = @@BASE_URL + extension + value
-    uri = URI(path)
-    response = JSON.parse(Net::HTTP.get(uri))
   end
 end
