@@ -17,6 +17,7 @@ class Souschef::CLI
     puts " - Search by region"
     puts " - Search by ingredient"
     puts " - Get random dish"
+    puts " - Search History"
     puts " - Exit"
     puts ""
 
@@ -50,6 +51,8 @@ class Souschef::CLI
       search_by_ingredient
     when "get random dish"
       find_random_dish
+    when "search history"
+      print_search_history
     when "exit"
       exit
     else
@@ -78,6 +81,7 @@ class Souschef::CLI
     find_dish_by_name
   end
 
+  # Lists categories of all dishes and calls sibling method #search_by_category to prompt user
   def list_dish_categories
     puts "---------- Categories ----------"
     categories = Souschef::ApiHandler.fetch_dish_categories
@@ -86,6 +90,7 @@ class Souschef::CLI
     search_by_category
   end
 
+  # Prompts user to search by specific category and then calls #find_dish_by_name to search for a dish
   def search_by_category
     puts "Please enter the category by which you'd like to search:"
     input = get_input_from_user
@@ -94,6 +99,7 @@ class Souschef::CLI
     find_dish_by_name
   end
 
+  # Lists regions of all dishes and calls sibling method #search_by_region to prompt user
   def list_dishes_by_region
     puts "------------ Dishes by Region ------------"
     regions = Souschef::ApiHandler.fetch_dish_regions
@@ -102,6 +108,7 @@ class Souschef::CLI
     search_by_region
   end
 
+  # Prompts user to search by specific region and then calls #find_dish_by_name to search for a dish
   def search_by_region
     puts "Please enter the region by which you'd like to search:"
     input = get_input_from_user
@@ -110,6 +117,7 @@ class Souschef::CLI
     find_dish_by_name
   end
 
+  # Prompts user to search by specific ingredient and then calls #find_dish_by_name to search for a dish
   def search_by_ingredient
     puts "Please enter the region by which you'd like to search:"
     input = get_input_from_user
@@ -137,6 +145,14 @@ class Souschef::CLI
     puts ""
     puts "Instructions: \n#{dish.instructions.gsub(/\./, ".\n")}"
     puts "----------------------------------------------------------------------"
+  end
+
+  def print_search_history
+    if Souschef::Dish.all.empty?
+      puts "Cannot find any recent searches."
+    else
+      Souschef::Dish.all.each_with_index { |dish, number| puts "#{number + 1}. #{dish.name}"}
+    end
   end
 
   def exit
