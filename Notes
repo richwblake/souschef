@@ -1,0 +1,6 @@
+For class Dish
+.all method that holds all dishes queried
+class variable @@all to hold all dishes
+
+For class ApiHandler
+#search_by_first_letter returns an array of dish names to select from
