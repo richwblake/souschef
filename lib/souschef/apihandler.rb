@@ -33,6 +33,10 @@ class Souschef::ApiHandler
     self.generate_JSON_from_pathname("filter.php?a=", region)
   end
 
+  def self.fetch_dishes_by_ingredient(ingredient)
+    self.generate_JSON_from_pathname("filter.php?i=", ingredient)
+  end
+
   def self.generate_JSON_from_pathname(extension, value = "")
     path = @@BASE_URL + extension + value
     uri = URI(path)

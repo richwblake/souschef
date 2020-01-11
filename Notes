@@ -15,5 +15,7 @@ be able to exit directly after a erroneous entry in #menu
 -- these options work reliably --
 search by name
 search by category
+search by region
 search by first letter
+search by ingredient
 get random dish
