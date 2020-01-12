@@ -102,7 +102,7 @@ class Souschef::CLI
       dishes["meals"].each { |dish| puts dish["strMeal"] }
       find_dish_by_name
     else
-      puts "Please input one letter"
+      puts "The input #{input} is not one letter. Please try again"
       search_by_first_letter
     end
   end
@@ -121,13 +121,14 @@ class Souschef::CLI
   # calls until the API class returns a valid hash
   def search_by_category
     puts "Please enter the category by which you'd like to search:"
-    input = Souschef::ApiHandler.fetch_dishes_by_category(get_input_from_user)
-    if input != nil
-      dishes = input
+    input = get_input_from_user
+    request_from_input = Souschef::ApiHandler.fetch_dishes_by_category(input)
+    if request_from_input != nil
+      dishes = request_from_input
       dishes["meals"].each{ |dish| puts dish["strMeal"] }
       find_dish_by_name
     else
-      puts "Please input a valid category"
+      puts "#{input} not found as a category. Please try again"
       search_by_category
     end
   end
@@ -146,13 +147,14 @@ class Souschef::CLI
   # If input is nil, recursive calls are made to #search_by_region until succesful region is inputted
   def search_by_region
     puts "Please enter the region by which you'd like to search:"
-    input = Souschef::ApiHandler.fetch_dishes_by_region(get_input_from_user)
-    if input != nil
-      dishes = input
+    input = get_input_from_user
+    request_from_input = Souschef::ApiHandler.fetch_dishes_by_region(input)
+    if request_from_input != nil
+      dishes = request_from_input
       dishes["meals"].each { |dish| puts dish["strMeal"] }
       find_dish_by_name
     else
-      puts "Region not found, please try again"
+      puts "#{input} not found as a region, please try again"
       search_by_region
     end
   end
@@ -161,9 +163,15 @@ class Souschef::CLI
   def search_by_ingredient
     puts "Please enter the region by which you'd like to search:"
     input = get_input_from_user
-    dishes = Souschef::ApiHandler.fetch_dishes_by_ingredient(input)
-    dishes["meals"].each { |dish| puts dish["strMeal"] }
-    find_dish_by_name
+    request_from_input = Souschef::ApiHandler.fetch_dishes_by_ingredient(input)
+    if request_from_input != nil
+      dishes = request_from_input
+      dishes["meals"].each { |dish| puts dish["strMeal"] }
+      find_dish_by_name
+    else
+      puts "Cannot find #{input} as an ingredient, please try again"
+      search_by_ingredient
+    end
   end
 
   def find_random_dish

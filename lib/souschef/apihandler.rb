@@ -13,8 +13,7 @@ class Souschef::ApiHandler
   end
 
   def self.fetch_random_dish
-    response = self.generate_JSON_from_pathname("random.php")
-    self.json_to_dish_args(response)
+    self.json_to_dish_args(self.generate_JSON_from_pathname("random.php"))
   end
 
   def self.fetch_dish_categories
@@ -60,10 +59,6 @@ class Souschef::ApiHandler
     response_array = response.to_a
     response_array[0][1] != nil ? true : false
     # binding.pry
-  end
-
-  def self.no_dish_found
-    puts "Cannot find the dish you are looking for... Returning to the menu"
   end
 
   def self.json_to_dish_args(json)
