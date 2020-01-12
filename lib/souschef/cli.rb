@@ -54,12 +54,11 @@ class Souschef::CLI
     when "search history"
       print_search_history
     when "exit"
-      exit
+      input
     else
       print "Please try again\n"
       handle_menu_input
     end
-    input
   end
 
   def get_input_from_user
