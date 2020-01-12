@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = "http://www.wills.fyi"
   spec.license       = "MIT"
 
-  spec.metadata["allowed_push_host"] = "http://mygemserver.com"
+  spec.metadata["allowed_push_host"] = "https://rubygems.org"
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "http://www.wills.fyi"
