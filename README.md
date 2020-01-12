@@ -7,11 +7,12 @@ Please see below for details on installing and executing this gem on you local m
 ## Installation
 
 Unfortunately, this gem as it stands now cannot be published to rubygems. This is because there is an existing gem
-with this name, and I do not want to take the time to configure it to do so.\n\nYou may fork and clone the repository
-where this gem is located by means of either SSH (recommended) or HTTP.
+with this name, and I do not want to take the time to configure it to do so.
+
+You may fork and clone the repository where this gem is located by means of either SSH (recommended) or HTTP.
 
 First, fork the repository by clicking the 'fork' button in the top right corner of the screen
-![Picture of fork button](./assets/github-fork-screenshot.png)
+![Picture of fork button](./assets/github-fork-screenshot.JPG)
 
 For SSH
 
