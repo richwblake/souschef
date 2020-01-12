@@ -16,11 +16,11 @@ First, fork the repository by clicking the 'fork' button in the top right corner
 
 To clone using SSH:
 
-    $ git clone git@github.com:richwblake/souschef.git
+    $ git clone git@github.com:your_username_here/souschef.git
 
 To clone using HTTP:
 
-    $ git clone https://github.com/richwblake/souschef.git
+    $ git clone https://github.com/your_username_here/souschef.git
 
 ## Usage
 
