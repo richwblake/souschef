@@ -1,3 +1,8 @@
+--App metadata--
+App returns nil when app exits with a good error code
+--END--
+
+
 For class Dish
 .all method that holds all dishes queried
 class variable @@all to hold all dishes
@@ -19,5 +24,3 @@ search by region
 search by first letter
 search by ingredient
 get random dish
-
-Added this note to check if refactor branch is working
