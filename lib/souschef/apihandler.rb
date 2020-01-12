@@ -41,6 +41,20 @@ class Souschef::ApiHandler
     path = @@BASE_URL + extension + value
     uri = URI(path)
     response = JSON.parse(Net::HTTP.get(uri))
+
+    valid_response = self.check_for_valid_response(response)
+    valid_response == true ? response : nil
+    # binding.pry
+  end
+
+  def self.check_for_valid_response(response)
+    response_array = response.to_a
+    response_array[0][1] != nil ? true : false
+    # binding.pry
+  end
+
+  def self.no_dish_found
+    puts "Cannot find the dish you are looking for... Returning to the menu"
   end
 
   def self.json_to_dish_args(json)
