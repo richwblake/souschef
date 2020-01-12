@@ -5,7 +5,7 @@ class Souschef::ApiHandler
 
   def self.fetch_dish_by_name(name)
     response = self.generate_JSON_from_pathname("search.php?s=", name)
-    response != nil ? self.json_to_dish_args(response) : self.no_dish_found
+    response != nil ? self.json_to_dish_args(response) : nil
   end
 
   def self.fetch_dishes_by_first_letter(letter)
