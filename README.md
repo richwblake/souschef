@@ -14,8 +14,13 @@ You may fork and clone the repository where this gem is located by means of eith
 First, fork the repository by clicking the 'fork' button in the top right corner of the screen
 ![Picture of fork button](./assets/github-fork-screenshot.JPG)
 
-For SSH
+To clone using SSH:
 
+    $ git clone git@github.com:richwblake/souschef.git
+
+To clone using HTTP:
+
+    $ git clone https://github.com/richwblake/souschef.git
 
 ## Usage
 
