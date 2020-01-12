@@ -11,7 +11,7 @@ with this name, and I do not want to take the time to configure it to do so.\n\n
 where this gem is located by means of either SSH (recommended) or HTTP.
 
 First, fork the repository by clicking the 'fork' button in the top right corner of the screen
-!(/assets/github-fork-screenshot.png)
+![Picture of fork button](./assets/github-fork-screenshot.png)
 
 For SSH
 
