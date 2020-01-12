@@ -5,7 +5,7 @@ class Souschef::ApiHandler
 
   def self.fetch_dish_by_name(name)
     response = self.generate_JSON_from_pathname("search.php?s=", name)
-    self.json_to_dish_args(response)
+    response != nil ? self.json_to_dish_args(response) : nil
   end
 
   def self.fetch_dishes_by_first_letter(letter)
@@ -13,8 +13,7 @@ class Souschef::ApiHandler
   end
 
   def self.fetch_random_dish
-    response = self.generate_JSON_from_pathname("random.php")
-    self.json_to_dish_args(response)
+    self.json_to_dish_args(self.generate_JSON_from_pathname("random.php"))
   end
 
   def self.fetch_dish_categories
@@ -37,10 +36,29 @@ class Souschef::ApiHandler
     self.generate_JSON_from_pathname("filter.php?i=", ingredient)
   end
 
+  # Takes a path extension and an optional value as parameters
+  # Creates a full path and requests api information from that path
+  # response will always be a hash
+  # if the request is invalid, response == a hash with one key, whose value is nil
+  # valid_response is either true or false, depending on if the request is invalid
+  # If request is invalid, returns nil. If valid, returns the response from the API
   def self.generate_JSON_from_pathname(extension, value = "")
     path = @@BASE_URL + extension + value
     uri = URI(path)
     response = JSON.parse(Net::HTTP.get(uri))
+
+    valid_response = self.check_for_valid_response(response)
+    valid_response == true ? response : nil
+    # binding.pry
+  end
+
+  # Checks to see if response has the invalid hash structure mentioned above
+  # If it is an invalid request, return false
+  # If the request is valid, return true
+  def self.check_for_valid_response(response)
+    response_array = response.to_a
+    response_array[0][1] != nil ? true : false
+    # binding.pry
   end
 
   def self.json_to_dish_args(json)

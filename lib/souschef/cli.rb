@@ -21,11 +21,14 @@ class Souschef::CLI
     puts " - Exit"
     puts ""
 
-    # Handles input and control flow for 1st level
-    # handle_menu_input returns the input as a String
+    # menu_input == nil unless user input was exit
+    # if user input was exit, menu_input == "exit"
     menu_input = handle_menu_input
 
     # Allows user to return to menu or exit program after a dish has been displayed
+    # if #handle_menu_input returns "exit", the else statement runs and #exit is called.
+    # Recursive calls are made to #menu if and only if the return key is pressed
+    # If input any value besides the empty string, #exit is called
     if menu_input != "exit"
       puts "Press enter to return to the menu, or type anything to exit the application."
       input = get_input_from_user
@@ -35,6 +38,9 @@ class Souschef::CLI
     end
   end
 
+  # First gets input from user, and then selects path to take from input
+  # Recursive calls are made if input != one of the chosen search methods
+  # returns the value of input if input == exit
   def handle_menu_input
     input = get_input_from_user
 
@@ -42,7 +48,7 @@ class Souschef::CLI
     when "search by name"
       find_dish_by_name
     when "search by first letter"
-      list_dishes_by_first_letter
+      search_by_first_letter
     when "search by category"
       list_dish_categories
     when "search by region"
@@ -54,31 +60,51 @@ class Souschef::CLI
     when "search history"
       print_search_history
     when "exit"
-      exit
+      input
     else
       print "Please try again\n"
       handle_menu_input
     end
-    input
   end
 
+  # Adds a ":" character without a newline, which allows for console-like formatting
+  # Strips input of leading and trailing whitespace and changes entire string
+  # to lowercase values, then returns the formatted value
   def get_input_from_user
     print ":"
     gets.chomp.strip.downcase
   end
 
+  # #find_dish_by_name is the terminal method call in any given search tree in the application
+  # Creates a Dish object, which is then saved in the @@all Dish class variable
+  # It returns nil upon every call
   def find_dish_by_name
     puts "Please enter the name of the dish:"
-    dish = Souschef::Dish.new(Souschef::ApiHandler.fetch_dish_by_name(get_input_from_user))
-    print_dish(dish)
+    input = Souschef::ApiHandler.fetch_dish_by_name(get_input_from_user)
+    if input != nil
+      dish = Souschef::Dish.new(input)
+      print_dish(dish)
+    else
+      cannot_find_dish
+      find_dish_by_name
+    end
   end
 
-  def list_dishes_by_first_letter
+  # Searches and displays all dishes that begin with the user's letter
+  # If input is not a single letter, recursive calls are made to #search_by_first_letter
+  # upon successful entry, displays all dishes requested and call #find_dish_by_name
+  def search_by_first_letter
     puts "Search dishes by which letter?"
     input = get_input_from_user
-    dishes = Souschef::ApiHandler.fetch_dishes_by_first_letter(input)
-    dishes["meals"].each { |dish| puts dish["strMeal"] }
-    find_dish_by_name
+
+    if input.length == 1 && input =~ /[a-z]/
+      dishes = Souschef::ApiHandler.fetch_dishes_by_first_letter(input)
+      dishes["meals"].each { |dish| puts dish["strMeal"] }
+      find_dish_by_name
+    else
+      puts "The input #{input} is not one letter. Please try again"
+      search_by_first_letter
+    end
   end
 
   # Lists categories of all dishes and calls sibling method #search_by_category to prompt user
@@ -91,12 +117,20 @@ class Souschef::CLI
   end
 
   # Prompts user to search by specific category and then calls #find_dish_by_name to search for a dish
+  # if the API class returns nill (because the request was invalid due to a bad input), #search_by_category makes recursive
+  # calls until the API class returns a valid hash
   def search_by_category
     puts "Please enter the category by which you'd like to search:"
     input = get_input_from_user
-    dishes = Souschef::ApiHandler.fetch_dishes_by_category(input)
-    dishes["meals"].each{ |dish| puts dish["strMeal"] }
-    find_dish_by_name
+    request_from_input = Souschef::ApiHandler.fetch_dishes_by_category(input)
+    if request_from_input != nil
+      dishes = request_from_input
+      dishes["meals"].each{ |dish| puts dish["strMeal"] }
+      find_dish_by_name
+    else
+      puts "#{input} not found as a category. Please try again"
+      search_by_category
+    end
   end
 
   # Lists regions of all dishes and calls sibling method #search_by_region to prompt user
@@ -109,21 +143,35 @@ class Souschef::CLI
   end
 
   # Prompts user to search by specific region and then calls #find_dish_by_name to search for a dish
+  # If the request is invalid due to a region not existing, input == nil
+  # If input is nil, recursive calls are made to #search_by_region until succesful region is inputted
   def search_by_region
     puts "Please enter the region by which you'd like to search:"
     input = get_input_from_user
-    dishes = Souschef::ApiHandler.fetch_dishes_by_region(input)
-    dishes["meals"].each { |dish| puts dish["strMeal"] }
-    find_dish_by_name
+    request_from_input = Souschef::ApiHandler.fetch_dishes_by_region(input)
+    if request_from_input != nil
+      dishes = request_from_input
+      dishes["meals"].each { |dish| puts dish["strMeal"] }
+      find_dish_by_name
+    else
+      puts "#{input} not found as a region, please try again"
+      search_by_region
+    end
   end
 
   # Prompts user to search by specific ingredient and then calls #find_dish_by_name to search for a dish
   def search_by_ingredient
     puts "Please enter the region by which you'd like to search:"
     input = get_input_from_user
-    dishes = Souschef::ApiHandler.fetch_dishes_by_ingredient(input)
-    dishes["meals"].each { |dish| puts dish["strMeal"] }
-    find_dish_by_name
+    request_from_input = Souschef::ApiHandler.fetch_dishes_by_ingredient(input)
+    if request_from_input != nil
+      dishes = request_from_input
+      dishes["meals"].each { |dish| puts dish["strMeal"] }
+      find_dish_by_name
+    else
+      puts "Cannot find #{input} as an ingredient, please try again"
+      search_by_ingredient
+    end
   end
 
   def find_random_dish
@@ -153,6 +201,10 @@ class Souschef::CLI
     else
       Souschef::Dish.all.each_with_index { |dish, number| puts "#{number + 1}. #{dish.name}"}
     end
+  end
+
+  def cannot_find_dish
+    puts "Cannot find the dish you are looking for... Please try again"
   end
 
   def exit
