@@ -6,19 +6,15 @@ Please see below for details on installing and executing this gem on you local m
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Unfortunately, this gem as it stands now cannot be published to rubygems. This is because there is an existing gem
+with this name, and I do not want to take the time to configure it to do so.\n\nYou may fork and clone the repository
+where this gem is located by means of either SSH (recommended) or HTTP.
 
-```ruby
-gem 'souschef'
-```
+First, fork the repository by clicking the 'fork' button in the top right corner of the screen
+!(assets/github-fork-screenshot.png)
 
-And then execute:
+For SSH
 
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install souschef
 
 ## Usage
 
