@@ -125,7 +125,9 @@ class Souschef::CLI
     request_from_input = Souschef::ApiHandler.fetch_dishes_by_category(input)
     if request_from_input != nil
       dishes = request_from_input
+      puts "---------- #{input.capitalize} Dishes ----------"
       dishes["meals"].each{ |dish| puts dish["strMeal"] }
+      puts "---------------------------------------------"
       find_dish_by_name
     else
       puts "#{input} not found as a category. Please try again"
@@ -151,7 +153,9 @@ class Souschef::CLI
     request_from_input = Souschef::ApiHandler.fetch_dishes_by_region(input)
     if request_from_input != nil
       dishes = request_from_input
+      puts "---------- #{input.capitalize} Dishes ----------"
       dishes["meals"].each { |dish| puts dish["strMeal"] }
+      puts "-----------------------------------------------"
       find_dish_by_name
     else
       puts "#{input} not found as a region, please try again"
@@ -166,7 +170,9 @@ class Souschef::CLI
     request_from_input = Souschef::ApiHandler.fetch_dishes_by_ingredient(input)
     if request_from_input != nil
       dishes = request_from_input
+      puts "---------- Dishes That Include #{input.capitalize} ----------"
       dishes["meals"].each { |dish| puts dish["strMeal"] }
+      puts "-----------------------------------------------------------"
       find_dish_by_name
     else
       puts "Cannot find #{input} as an ingredient, please try again"
@@ -199,7 +205,9 @@ class Souschef::CLI
     if Souschef::Dish.all.empty?
       puts "Cannot find any recent searches."
     else
+      puts "---------- Search History ----------"
       Souschef::Dish.all.each_with_index { |dish, number| puts "#{number + 1}. #{dish.name}"}
+      puts "------------------------------------"
     end
   end
 
