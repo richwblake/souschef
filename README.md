@@ -26,7 +26,13 @@ To clone using HTTP:
 
 Run `bin/setup` to install dependencies and required gems. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-Run bin/souschef to execute the application as intended.
+If you use `bin/console` to test the application, run the following line:
+
+    `Souschef::CLI.new.call`
+
+to begin an instance of the application.
+
+Run `bin/souschef` to execute the application as intended.
 
 ## Usage
 
