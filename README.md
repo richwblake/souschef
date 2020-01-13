@@ -28,7 +28,7 @@ Run `bin/setup` to install dependencies and required gems. You can also run `bin
 
 If you use `bin/console` to test the application, run the following line:
 
-    `Souschef::CLI.new.call`
+    Souschef::CLI.new.call
 
 to begin an instance of the application.
 
