@@ -80,14 +80,21 @@ class Souschef::CLI
   # It returns nil upon every call
   def find_dish_by_name
     puts "Please enter the name of the dish:"
-    input = Souschef::ApiHandler.fetch_dish_by_name(get_input_from_user)
-    if input != nil
-      dish = Souschef::Dish.new(input)
+    input = get_input_from_user
+    dish = Souschef::Dish.all.find { |dish| dish.name.downcase == input }
+    dish ||= fetch_dish(input)
+
+    if dish
       print_dish(dish)
     else
       cannot_find_dish
       find_dish_by_name
     end
+  end
+
+  def fetch_dish(input)
+    json = Souschef::ApiHandler.fetch_dish_by_name(input)
+    dish = Souschef::Dish.new(json) if json
   end
 
   # Searches and displays all dishes that begin with the user's letter
@@ -165,7 +172,7 @@ class Souschef::CLI
 
   # Prompts user to search by specific ingredient and then calls #find_dish_by_name to search for a dish
   def search_by_ingredient
-    puts "Please enter the region by which you'd like to search:"
+    puts "Please enter the ingredient by which you'd like to search:"
     input = get_input_from_user
     request_from_input = Souschef::ApiHandler.fetch_dishes_by_ingredient(input)
     if request_from_input != nil

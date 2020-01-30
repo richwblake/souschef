@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
-require './lib/souschef'
+require_relative '../lib/souschef'
 
 Souschef::CLI.new.call
